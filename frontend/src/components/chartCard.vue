@@ -114,15 +114,15 @@ export default {
       this.possibleCustomFieldsList = Array.from(new Set([].concat.apply([], Object.values(this.possibleCustomFields))))
     },
     getCustomFields: function(experiment_id) {
-      this.$http.get('customfieldnames/' + experiment_id).then(function(response) {
-        this.possibleCustomFields[experiment_id] = response.body
+      this.axios.get('http://localhost:3000/customfieldnames/' + experiment_id).then((response) => {
+        this.possibleCustomFields[experiment_id] = response.data
         this.updatePossibleCustomFieldList()
       })
     }, 
     responseToData: function(response, seriesname) {
       var localname = this.possibleStandardFields.includes(seriesname) ? seriesname : 'cf'
-      var y = response.body[localname]
-      var x = response.body.timestep
+      var y = response.data[localname]
+      var x = response.data.timestep
 
       return x.map((e, i) => { return [e, y[i]]})
     },
@@ -136,13 +136,13 @@ export default {
       if (dummy !== undefined) { dummy.remove(); }
 
       if (this.possibleStandardFields.includes(variable)) {
-        var url = 'steps/' + index
+        var url = 'http://localhost:3000/steps/' + index
       } else {
-        var url = 'customfields/' + index + '?fieldname=' + variable
+        var url = 'http://localhost:3000/customfields/' + index + '?fieldname=' + variable
       }
 
-      this.$http.get(url).then(function(response) {
-        if (Object.keys(response.body).length > 0) {
+      this.axios.get(url).then((response) => {
+        if (Object.keys(response.data).length > 0) {
           this.$refs.chart.chart.addSeries({
               name: 'Run ' + index + ', ' + variable,
               id: index + ',' + variable,
@@ -197,7 +197,7 @@ export default {
       } else {
         var url = 'customfields/' + xp_index + '?fieldname=' + variableName
       }
-      this.$http.get('steps/' + xp_index).then(function(response) {
+      this.axios.get('http://localhost:3000/steps/' + xp_index).then(function(response) {
         if (Object.keys(response.body).length > 0) {
           var newData = this.responseToData(response, variableName);
           var oldData = this.$refs.chart.chart.get(xp_index + ',' + variableName).data

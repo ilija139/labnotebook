@@ -115,9 +115,10 @@ export default {
   },
   methods: {
     getExperiments() {
-      this.$http.get('experiments').then(response => {
+      this.axios.get('http://localhost:3000/experiments').then((response) => {
+        console.log(response)
         var dict = {}
-        for (var experiment of response.body) {
+        for (var experiment of response.data) {
           dict[experiment.run_id] = experiment
         }
         this.experiments =  dict ;
