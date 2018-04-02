@@ -43,7 +43,7 @@
     <v-toolbar color="primary" dark fixed app clipped-left>
       <v-toolbar-side-icon @click.stop="drawer =! drawer"></v-toolbar-side-icon>
       
-      <v-toolbar-title><v-icon medium left>fas fa-flask</v-icon>Lab Notebook   </v-toolbar-title>
+      <v-toolbar-title><v-icon medium left>fas fa-flask</v-icon>   Lab Notebook   </v-toolbar-title>
     </v-toolbar>
     <v-content>
       <v-container grid-list-xl text-xs-center fluid>
